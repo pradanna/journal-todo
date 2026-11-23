@@ -1,0 +1,36 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    depends_on:
+      - postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jurnal.rule=Host(`journal.genossys.id`)"
+      - "traefik.http.routers.jurnal.entrypoints=websecure"
+      - "traefik.http.routers.jurnal.tls.certresolver=letsencrypt"
+      - "traefik.http.services.jurnal.loadbalancer.server.port=8081"
+    networks:
+      - web
+      - internal
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jurnal
+      POSTGRES_PASSWORD: change_me
+      POSTGRES_DB: jurnal_freelance
+    volumes:
+      - jurnal_pg_data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+volumes:
+  jurnal_pg_data:

@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS refresh_tokens;
+DROP TABLE IF EXISTS entry_tags;
+DROP TABLE IF EXISTS tags;
+DROP TABLE IF EXISTS entry_items;
+DROP TABLE IF EXISTS journal_entries;
+DROP TABLE IF EXISTS workspaces;
+DROP TABLE IF EXISTS users;
